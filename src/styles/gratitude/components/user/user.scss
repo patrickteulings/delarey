@@ -1,0 +1,12 @@
+.user {
+  &__image {
+    img {
+      @include size(40px);
+      border-radius: 50%;
+    }
+  }
+  &__test {
+    font-family: $handwriting-font-face;
+    font-weight: 100;
+  }
+}

@@ -1,0 +1,47 @@
+.add {
+  &__formWrapper {
+    margin: 0 auto;
+    max-width: 80%;
+
+    @include mq('tablet', 'min') {
+      max-width: 400px;
+    }
+  }
+
+  &__inputWrapper {
+    input, textarea {
+      background: lighten(color('primary'), 20%);
+      font-family: $heading-font-face;
+      color: white;
+
+      &:focus {
+        outline: none;
+        background: lighten(color('primary'), 30%);
+      }
+
+      &::placeholder {
+        color: lighten(color('primary'), 0%);
+      }
+    }
+
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      width: 100%;
+      background: lighten(color('primary'), 20%);
+      @include innerspace(1rem);
+      border-radius: 2px;
+      border: 0;
+      color: color('white');
+      font-family: $heading-font-face;
+      @include font-size(16px);
+    }
+
+    label {
+      margin-top: 2rem;
+      font-weight: 800;
+      color: color('white');
+    }
+  }
+}

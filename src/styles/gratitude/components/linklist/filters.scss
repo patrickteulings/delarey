@@ -1,0 +1,21 @@
+.filters {
+  @include innerspace(0, 2rem);
+}
+
+.filterButton {
+  display: inline-block;
+  margin-right: 1rem;
+  background: color('tertiary');
+  border-radius: 2px;
+  @include innerspace(0.5rem, 0.8rem);
+  @include transition();
+
+  &.active {
+    background: color('white');
+    color: color('tertiary');
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}

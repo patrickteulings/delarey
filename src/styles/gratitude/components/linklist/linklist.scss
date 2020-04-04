@@ -1,0 +1,24 @@
+h3 {
+  font-family: $heading-font-face;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.linkCards {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 1rem;
+  @include innerspace(2rem);
+
+  @include mq("phone", "min") {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @include mq("tablet", "min") {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mq("desktop", "min") {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

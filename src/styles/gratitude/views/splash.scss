@@ -1,0 +1,17 @@
+.splash {
+  @include flex-center('both');
+  background: color('accent');
+  color: #D996C7;
+
+  &__inner {
+
+  }
+
+  h2, h6 {
+    display: block;
+    width: 100%;
+    font-family: $handwriting-font-face;
+    color: color('white');
+    text-align: center;
+  }
+}

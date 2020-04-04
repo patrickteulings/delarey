@@ -1,0 +1,126 @@
+.detail {
+  &__navigation {
+    @include position(absolute);
+    height: 100px;
+    overflow-x: hidden;
+  }
+
+  &__title {
+    @extend h2;
+    @include transition(color, 0.2s);
+    line-height: 64px;
+    margin-bottom: 0;
+    text-align: justify;
+
+    &:focus {
+      outline: 0px;
+      opacity: 1;
+      background: #F3F3F3;
+      padding: 1rem;
+      margin: -2rem -1rem 2rem !important;
+    }
+  }
+
+  &__body {
+    @include font-size(16px);
+    @include transition();
+    color: color('black');
+    font-family: $primary-font-face;
+    text-align: justify;
+    line-height: 26px;
+
+    &:focus {
+      outline: 0px;
+      opacity: 0.8;
+    }
+  }
+
+  &__meta {
+    display: block;
+    font-family: $handwriting-font-face;
+    font-size: 14px;
+    text-transform: uppercase;
+    @include outerspace(auto auto 32px auto);
+  }
+}
+
+
+.hero {
+  &--detail {
+    @include position(relative);
+    @include flex-center('both');
+    @include transition();
+    min-height: 50vh;
+    text-align: center;
+
+    &__weathericon {
+      padding-top: 4rem;
+      color: color('white');
+      @include font-size(96px);
+      opacity: 0.4;
+    }
+
+    &__weather-description {
+      margin-top: 3rem;
+      font-family: $handwriting-font-face;
+      @include font-size(24px);
+    }
+
+    &__edit, &__cancel, &__update, &__home {
+      @include size(32px);
+      @include position(absolute, auto, auto, 32px, -24px);
+      @include card-shadow(1);
+      @include transition();
+      opacity: 0;
+      transform: translateY(-50px);
+
+      &.isActive {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .gratitude-icon {
+        fill: color('white');
+      }
+    }
+
+    &__cancel {
+      @include position(absolute, auto, auto, 88px, -24px);
+    }
+
+    &__update {
+      transform: translateY(50px);
+    }
+
+    &__home {
+      @include position(absolute, 32px, auto, auto, -24px);
+    }
+  }
+}
+
+
+.btn-delete {
+  @extend .button-reset;
+  background: color('primary');
+  color: color('white');
+  border-radius: 2px;
+}
+
+.gratitudeWrapper {
+  @include position();
+
+  .editableGratitude, .staticGratitude {
+    pointer-events: none;
+
+    &.isActive {
+      pointer-events: auto;
+
+      .dropdown {
+        margin-top: 2rem;
+      }
+    }
+  }
+}
+
+
+

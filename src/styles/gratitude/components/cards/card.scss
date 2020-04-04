@@ -1,0 +1,109 @@
+.card {
+  padding: 1rem;
+  position: relative;
+  border-radius: 2px;
+  background: color('white');
+
+  &__title {
+    font-family: 'Martel';
+    font-weight: 100;
+    @include font-size(24px);
+    line-height: 2.4rem;
+  }
+
+  &__body {
+    height: 80px;
+    @include font-size(12px);
+    opacity: 0.87;
+    height: 50px;
+    @include truncate-multiline(2, 1.8, 14px);
+  }
+
+  &__createdAt{
+    @include font-size(10px);
+    font-weight: 100;
+  }
+
+  &__moodstrip {
+    @include size(4px, 100%);
+    @include position(absolute);
+    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
+  }
+
+}
+small.id {
+  font-size: 10px;
+  opacity: 0.5;
+  padding-bottom: 0.5rem;
+  display: none;
+}
+
+.linkCard {
+  max-width: 300px;
+  background: lighten(color('primary'), 20%);
+  @include innerspace(1rem);
+  @include card-shadow(2);
+  @include transition();
+  border-radius: 1px;
+  display: flex;
+  flex-direction: column;
+
+
+  &:hover {
+    background: lighten(color('primary'), 30%);
+    @include card-shadow(3);
+  }
+
+  &__label {
+    display: inline-block;
+    background: color('primary');
+    color: color('white');
+    border-radius: 2px;
+    @include font-size(12px);
+    @include innerspace(0.3rem, 0.6rem);
+    text-transform: lowercase;
+    margin-bottom: 1rem;
+    font-weight: 400;
+
+    &--daily {
+      background: rgba(255,255,255,0.1);
+      margin-left: 0.5rem;
+    }
+  }
+
+  &__title {
+    @include font-size(32px);
+    margin-top: 1rem;
+    color: color('tertiary');
+  }
+
+  &__description {
+    opacity: 0.8;
+    flex: 1 1 auto;
+  }
+
+  &__link {
+    text-transform: lowercase;
+    font-weight: 400;
+    color: color('primary');
+    @include transition();
+
+    &:hover {
+      color: color('white');
+    }
+  }
+
+  &__date {
+    color: color('primary');
+    @include font-size(12px);
+    margin-top: 1rem;
+    font-weight: 400;
+    align-self: flex-end;
+  }
+
+  p {
+    font-weight: 400;
+  }
+
+}
