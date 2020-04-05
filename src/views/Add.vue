@@ -6,52 +6,54 @@
 
     <div v-if="state.dataLoaded">
       <div class="add__formWrapper">
-        <div class="add__inputWrapper">
+        <div class="add__inputWrapper" :class="{lessVisible: state.addSub }">
           <label>Titel</label>
           <input type="text" placeholder="Korte titel" v-model="state.title">
         </div>
         <!-- MAINCATEGORIES -->
-        <div class="add__inputWrapper">
+        <div class="add__inputWrapper" :class="{lessVisible: state.addSub }">
           <label>Hoofdcategorie</label>
           <select @change="onMainCategoryChange($event)">
-            <option value="all">Alles</option>
+            <option value="all">Selecteer</option>
             <option v-for="(item, index) in getMainCategories()" :value="item.id" :key="index">{{item.id}}</option>
           </select>
         </div>
         <!-- SUBCATEGORIES -->
-        <div class="add__inputWrapper">
+        <div class="add__inputWrapper" :class="{lessVisible: state.addSub }" v-if="state.selectedMainCategory.length">
           <label>Subcategorie</label>
           <select @change="onSubCategoryChange($event)">
+            <option value="all">Selecteer</option>
             <option v-for="(item, index) in state.subCategories" :value="item.id" :key="index">{{item.label}}</option>
+            <option value="">----------------</option>
+            <option value="add">SubCategorie toevoegen</option>
           </select>
         </div>
-        <div class="add__inputWrapper">
+        <div v-if="state.addSub">
+          <input type="text" v-model="state.newSubcategory" placeholder="Vul max. 1 woord in">
+          <div class="btn btn--add" @click="onSubmitNewCategory()">{{state.addSubText}}</div>
+        </div>
+        <div class="add__inputWrapper" :class="{lessVisible: state.addSub }">
           <label>Omschrijving</label>
           <textarea name="" id="" cols="30" rows="10" placeholder="Omschrijf in min.10 woorden (beetje context is fijn), en verplicht 😉" v-model="state.description"></textarea>
         </div>
-        <div class="add__inputWrapper">
+        <div class="add__inputWrapper" :class="{lessVisible: state.addSub }">
           <label>Deze tip is van...</label>
           <input type="text" placeholder="Wie ben je?"  v-model="state.author">
         </div>
-        <div class="add__inputWrapper">
+        <div class="add__inputWrapper" :class="{lessVisible: state.addSub }">
           <label>De hyper-hyper-hyper link</label>
           <input type="text" placeholder="http://www.voorbeeld.nl" v-model="state.url">
         </div>
-        <div class="btn" @click="onSubmit()">Toevoegen</div>
-      </div>
-      <div class="linkCards">
-        <div class="linkCard" v-for="(item, index) in getLinks" :key="`link-${index}`">
-          <div>
-            <small class="linkCard__label">{{getCategoryLabel(item.subcategory)}}</small>
-          </div>
-          <h3>{{item.title}}</h3>
-          <p>{{item.description}}</p>
-          <a :href="item.url" target="_blank">{{item.url}}</a>
-          <div class="linkCard__date">{{new Date()}}</div>
-        </div>
+        <div class="btn btn--add" @click="onSubmit()">{{state.addtext}}</div>
       </div>
     </div>
-    <div v-else>nog niet geladen</div>
+    <div v-else>
+      <div class="spinnerWrapper" v-if="!state.dataLoaded">
+        <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+          <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+        </svg>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -69,13 +71,17 @@ export default {
       title: '',
       description: '',
       author: '',
-      url: 'Http://www.voorbeeld.nl',
+      url: '',
       parentLinks: context.root.$store.getters.getParentLinks,
       parentCategories: context.root.$store.getters.getParentCategories,
       subCategories: [],
       selectedSubCategory: '',
       selectedMainCategory: '',
-      dataLoaded: false
+      dataLoaded: false,
+      newSubcategory: '',
+      addSub: false,
+      addtext: 'Toevoegen',
+      addSubText: 'Subcategorie Toevoegen'
     });
 
     const getLinks = computed(() => {
@@ -96,7 +102,6 @@ export default {
     };
 
     const onMainCategoryChange = (e: {target: HTMLInputElement}) => {
-      console.log('change', e.target.value);
       const mainCat = e.target.value;
 
       state.selectedMainCategory = mainCat;
@@ -118,11 +123,32 @@ export default {
     };
 
     const onSubCategoryChange = (e: {target: HTMLInputElement}) => {
+      if (e.target.value.toLowerCase() === 'add') {
+        state.addSub = true;
+      }
       state.selectedSubCategory = e.target.value;
-      console.log(state.selectedSubCategory);
+
+    };
+
+    const onSubmitNewCategory = () => {
+      state.addSubText = 'Bezig...'
+      if (state.newSubcategory.split(' ').length > 1 || state.newSubcategory.length === 0) {
+        alert('Mag max. 1 woord zijn');
+      }
+
+      const item = {item: {label: state.newSubcategory}, mainCategory: state.selectedMainCategory};
+
+      context.root.$store.dispatch('addSubCategory', item).then((response: any) => {
+        setTimeout(() => {
+          state.addSubText = 'Toevoegen';
+          state.addSub = false;
+        }, 600);
+      });
+
     };
 
     const onSubmit = () => {
+      state.addtext = 'bezig met opslaan';
       console.log(state.title);
       console.log(state.description);
       console.log(state.selectedMainCategory);
@@ -143,7 +169,12 @@ export default {
       };
 
       context.root.$store.dispatch('addLink', item).then((response: any) => {
-        console.log(response);
+        state.addtext = 'gelukt!';
+        setTimeout(() => {
+           state.addtext = 'toevoegen';
+        }, 1000);
+      }).catch ((e: any) => {
+        state.addtext = 'er ging iets mis, App Patrick';
       });
     };
 
@@ -167,7 +198,8 @@ export default {
       getMainCategories,
       onMainCategoryChange,
       onSubCategoryChange,
-      onSubmit
+      onSubmit,
+      onSubmitNewCategory
     };
   }
 };

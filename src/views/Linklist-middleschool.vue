@@ -46,7 +46,6 @@ export default {
       subCategories: context.root.$store.getters.getParentCategories,
       dataLoaded: false,
       zomaar: [] as any,
-      test: [] as any,
       activeLinks: [] as any,
       activeFilters: [] as any
     });
@@ -61,7 +60,6 @@ export default {
 
       if (activeFilters.length === 0) {
         state.activeLinks = state.originalParentLinks;
-        return;
       }
 
       state.activeLinks = [];
@@ -74,11 +72,6 @@ export default {
         }
       }
     };
-
-    const testFunc = computed(() => {
-      console.log('opvragen', context.root.$store.getters.getParentCategories);
-      return context.root.$store.getters.getParentCategories;
-    });
 
     const onHandleSort = (sortType: string) => {
 
@@ -112,16 +105,14 @@ export default {
     };
 
     onMounted (() => {
-      context.root.$store.dispatch('bindParentCategories').then((response: any) => {
-        context.root.$store.dispatch('bindParentLinks').then((responseLinks: any) => {
+      context.root.$store.dispatch('bindMiddleSchoolCategories').then((response: any) => {
+        context.root.$store.dispatch('bindMiddleSchoolLinks').then((responseLinks: any) => {
           state.subCategories = response;
-          state.test = response;
           state.originalParentLinks = responseLinks;
           state.activeLinks = responseLinks;
           setTimeout(() => {
-            console.log(state.test);
             state.dataLoaded = true;
-          }, 1000);
+          }, 200);
 
         });
       });
@@ -131,8 +122,7 @@ export default {
       state,
       getLinks,
       onFilter,
-      onHandleSort,
-      testFunc
+      onHandleSort
     };
   }
 };

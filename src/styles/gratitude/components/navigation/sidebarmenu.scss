@@ -1,19 +1,62 @@
+.spinner {
+  fill: white;
+
+  .path {
+    // background-color: white;
+    stroke: white;
+
+  }
+}
+
 .sidebarmenu {
   @include position(fixed, 0, 0);
   @include transition();
   @include innerspace(1rem);
-  @include size(10vw, 100vh);
+  @include size(5vw, 100vh);
   background: color('white');
   transform: translateX(0%);
-
+  display: flex;
+  @include flex-center('both');
   z-index: 101;
 
-  &.isOpen {
-    transform: translateX(0%);
+  a {
+    color: color('tertiary');
+    display: block;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-decoration: none;
+
+    &.add {
+      color: lighten(color('tertiary'), 10%);
+    }
+  }
+
+  &__inner {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    @include transition();
+
+    .open & {
+      opacity: 1;
+      max-width: 300px;
+    }
+  }
+
+  &.open {
+    @include size(20vw, 100vh);
   }
 
   .navigation__trigger-wrapper {
-    @include position(absolute, auto, 1.3rem, 0.8rem, auto);
+    background: color('tertiary');
+    @include size(60px);
+    @include flex-center('both');
+    border-radius: 50px;
+    @include innerspace(1rem);
+    position: absolute;
+    left: calc(100% - 20px);
+    top: calc(50% - 20px);
+    // @include position(absolute, auto, 1.3rem, 0.8rem, auto);
 
     .navigation__trigger {
       span {

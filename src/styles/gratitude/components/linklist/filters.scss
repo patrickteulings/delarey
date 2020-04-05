@@ -1,5 +1,7 @@
 .filters {
   @include innerspace(0, 2rem);
+  display: flex;
+  justify-content: space-between;
 }
 
 .filterButton {
@@ -9,6 +11,7 @@
   border-radius: 2px;
   @include innerspace(0.5rem, 0.8rem);
   @include transition();
+  font-weight: 300;
 
   &.active {
     background: color('white');
@@ -17,5 +20,26 @@
 
   &:last-child {
     margin-right: 0;
+  }
+}
+
+.sortWrapper {
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    background: lighten(color('primary'), 20%);
+    @include innerspace(0.5rem, 0.8rem);
+    border-radius: 2px;
+    border: 0;
+    color: color('white');
+    font-family: $heading-font-face;
+    @include font-size(16px);
+    font-family: $primary-font-face;
+
+    &:focus {
+      outline: none;
+    }
   }
 }

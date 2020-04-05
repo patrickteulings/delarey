@@ -22,15 +22,18 @@
   export default {
     name: 'linkCard',
     props: {
-      data: Object
+      data: Object,
+      categories: Array
     },
     setup (props: any, context: any) {
       const state = reactive({
-        itemData: props.data
+        itemData: props.data,
+        subCategories: props.categories
       });
 
       const getCategoryLabel = (subCategoryID: string): string => {
-        const parentCategories = context.root.$store.getters.getParentCategories;
+        console.log('hier', state.subCategories);
+        const parentCategories = state.subCategories;
         const category = parentCategories.find((item: any) => item.id === subCategoryID);
         return category.label;
       };

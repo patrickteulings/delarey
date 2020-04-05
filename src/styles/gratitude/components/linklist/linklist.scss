@@ -1,3 +1,7 @@
+.linklist {
+  position: relative;
+}
+
 h3 {
   font-family: $heading-font-face;
   font-weight: 900;
@@ -21,4 +25,15 @@ h3 {
   @include mq("desktop", "min") {
     grid-template-columns: repeat(4, 1fr);
   }
+}
+
+.spinnerWrapper {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.2);
+  z-index:3;
+  @include flex-center('both');
 }

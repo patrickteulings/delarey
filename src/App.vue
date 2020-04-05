@@ -16,10 +16,9 @@
       </main>
     </div>
     <div v-else>
-      No user present
       <SidebarMenu />
-      adsa
-      <LoginForm></LoginForm>
+
+      <!-- <LoginForm></LoginForm> -->
       <div class="main" style="padding-left: 10vw;">
         <router-view />
       </div>

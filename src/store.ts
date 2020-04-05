@@ -145,7 +145,7 @@ export default new Vuex.Store({
     }),
 
     bindPrepSchoolCategories: firestoreAction(({ bindFirestoreRef }) => {
-      return bindFirestoreRef('preSchoolCategories', db.collection('categories').doc('prepschool').collection('categories'));
+      return bindFirestoreRef('prepSchoolCategories', db.collection('categories').doc('prepschool').collection('categories'));
     }),
 
     bindMiddleSchoolCategories: firestoreAction(({ bindFirestoreRef }) => {
@@ -156,10 +156,23 @@ export default new Vuex.Store({
       return bindFirestoreRef('parentLinks', db.collection('categories').doc('parents').collection('links'));
     }),
 
+    bindPrepSchoolLinks: firestoreAction(({ bindFirestoreRef }) => {
+      return bindFirestoreRef('prepSchoolLinks', db.collection('categories').doc('prepschool').collection('links'));
+    }),
+
+    bindMiddleSchoolLinks: firestoreAction(({ bindFirestoreRef }) => {
+      return bindFirestoreRef('middleSchoolLinks', db.collection('categories').doc('middleschool').collection('links'));
+    }),
+
     addLink: (context: any, payload: any) => {
       const ref = db.collection('categories').doc(payload.mainCategory).collection('links');
-      console.log(payload);
       return ref.add(payload);
+    },
+
+    addSubCategory: (context: any, payload: any) => {
+      console.log(payload);
+      const ref = db.collection('categories').doc(payload.mainCategory).collection('categories');
+      return ref.add(payload.item);
     },
 
 
@@ -195,6 +208,8 @@ export default new Vuex.Store({
     getPrepSchoolCategories: (state: any) => state.prepSchoolCategories,
     getMiddleSchoolCategories: (state: any) => state.middleSchoolCategories,
     getParentLinks: (state: any) => state.parentLinks,
+    getPrepSchoolLinks: (state: any) => state.prepSchoolLinks,
+    getMiddleSchoolLinks: (state: any) => state.middleSchoolLinks,
 
     getGratitudes: (state: any) => {
       return state.gratitudes;

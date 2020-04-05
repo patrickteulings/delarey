@@ -1,17 +1,20 @@
 <template>
-  <div class="sidebarmenu">
-    hadhadhasiuh
-    <div class="sidebarmenu__topbar">
-      <div class="navigation__trigger-wrapper">
-        <div role="button" class="navigation__trigger" :class="{'is-open': menuOpen}">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+  <div class="sidebarmenu" :class="{open: menuOpen}">
+
+    <div class="navigation__trigger-wrapper">
+      <div role="button" class="navigation__trigger" :class="{'is-open': menuOpen}" @click="toggleMenu">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
     </div>
+
+
     <div class="sidebarmenu__inner">
-        jddskjbfdskb
+      <router-link to="/linklist" @click.native="toggleMenu">Voor de Ouders</router-link>
+      <router-link to="/voor-de-kleinsten" @click.native="toggleMenu">Voor de Bijen / Rupsen</router-link>
+      <router-link to="/voor-de-otters" @click.native="toggleMenu">Voor de Otters</router-link>
+      <router-link to="/add" class="add" @click.native="toggleMenu">Link Toevoegen</router-link>
     </div>
   </div>
 </template>
@@ -26,12 +29,13 @@ export default Vue.extend ({
   data: () => {
     return ({
       iets: 'iets',
-      error: ''
+      error: '',
+      menuOpen: false
     });
   },
 
   computed: {
-    menuOpen () {
+    menuIsOpen () {
       return this.$store.getters.menuState;
     },
     user () {
@@ -39,7 +43,9 @@ export default Vue.extend ({
     }
   },
   methods: {
-
+    toggleMenu () {
+      this.menuOpen = !this.menuOpen;
+    }
   }
 
 });

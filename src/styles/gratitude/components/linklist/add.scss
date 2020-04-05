@@ -2,6 +2,7 @@
   &__formWrapper {
     margin: 0 auto;
     max-width: 80%;
+    margin-bottom: 5rem;
 
     @include mq('tablet', 'min') {
       max-width: 400px;
@@ -24,6 +25,10 @@
       }
     }
 
+    &.lessVisible {
+      opacity: 0.2;
+    }
+
     select {
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -43,5 +48,12 @@
       font-weight: 800;
       color: color('white');
     }
+  }
+
+  .btn--add {
+    color: color('primary');
+    background: color('tertiary');
+    margin-top: 2rem;
+    font-weight: 400;
   }
 }

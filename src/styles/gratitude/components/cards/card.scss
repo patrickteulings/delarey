@@ -76,6 +76,7 @@ small.id {
     @include font-size(32px);
     margin-top: 1rem;
     color: color('tertiary');
+    word-break: break-all;
   }
 
   &__description {
@@ -88,6 +89,9 @@ small.id {
     font-weight: 400;
     color: color('primary');
     @include transition();
+    height: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &:hover {
       color: color('white');
