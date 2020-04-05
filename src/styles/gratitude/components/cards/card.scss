@@ -40,7 +40,7 @@ small.id {
 }
 
 .linkCard {
-  max-width: 300px;
+  max-width: 260px;
   background: lighten(color('primary'), 20%);
   @include innerspace(1rem);
   @include card-shadow(2);
@@ -48,6 +48,10 @@ small.id {
   border-radius: 1px;
   display: flex;
   flex-direction: column;
+
+  @include mq('tablet', 'min') {
+    max-width: 320px;
+  }
 
 
   &:hover {
@@ -73,10 +77,33 @@ small.id {
   }
 
   &__title {
-    @include font-size(32px);
+    @include font-size(24px);
     margin-top: 1rem;
     color: color('tertiary');
     word-break: break-all;
+
+    @include mq('tablet', 'min') {
+      @include font-size(32px);
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  &__author {
+    color: color('primary');
+    @include font-size(12px);
+    font-weight: 400;
+  }
+
+  &__edit {
+    cursor: pointer;
+  }
+
+  &__subs {
+    display: flex;
+    justify-content: space-between;
   }
 
   &__description {
@@ -87,7 +114,7 @@ small.id {
   &__link {
     text-transform: lowercase;
     font-weight: 400;
-    color: color('primary');
+    color: color('tertiary');
     @include transition();
     height: 16px;
     overflow: hidden;
@@ -104,6 +131,10 @@ small.id {
     margin-top: 1rem;
     font-weight: 400;
     align-self: flex-end;
+
+    &.edit {
+      cursor: pointer;
+    }
   }
 
   p {

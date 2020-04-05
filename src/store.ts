@@ -169,6 +169,11 @@ export default new Vuex.Store({
       return ref.add(payload);
     },
 
+    updateLink: (context: any, payload: any) => {
+      const ref = db.collection('categories').doc(payload.mainCategory).collection('links').doc(payload.id);
+      return ref.set(payload);
+    },
+
     addSubCategory: (context: any, payload: any) => {
       console.log(payload);
       const ref = db.collection('categories').doc(payload.mainCategory).collection('categories');

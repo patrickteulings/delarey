@@ -1,13 +1,18 @@
 <template>
   <div class="filters">
-    <div class="sortWrapper">
-      <select @change="onSortSelectChanged">
-        <option value="none">Sorteer</option>
-        <option value="newest">Nieuwste bovenaan</option>
-        <option value="category">Sorteer per categorie</option>
-      </select>
+    <div class="buttonWrappers">
+      <div class="sortWrapper">
+        <select @change="onSortSelectChanged">
+          <option value="none">Sorteer</option>
+          <option value="newest">Nieuwste bovenaan</option>
+          <option value="category">Sorteer per categorie</option>
+        </select>
+      </div>
+      <div class="filterTrigger">
+        <div class="filterButton filterButton--trigger" @click="openOnMobile">Toon categorieën</div>
+      </div>
     </div>
-    <div class="filterButtonWrapper">
+    <div class="filterButtonWrapper" :class="{open: state.filtersOpen}">
       <div class="filterButton" :class="isActiveFilter(item.id)" v-for="(item) in state.categories" :key="item.id" :data-id="item.id" @click="onLabelClick">{{item.label}}</div>
     </div>
   </div>
@@ -25,6 +30,7 @@
     setup (props: any, context: any) {
       const state = reactive({
         categories: props.data,
+        filtersOpen: false,
         activeFilters: [] as any
       });
 
@@ -51,11 +57,16 @@
         context.emit('onSortChanged', e.target.value);
       };
 
+      const openOnMobile = () => {
+        state.filtersOpen = !state.filtersOpen;
+      };
+
       return {
         state,
         onLabelClick,
         isActiveFilter,
-        onSortSelectChanged
+        onSortSelectChanged,
+        openOnMobile
       };
     }
   };

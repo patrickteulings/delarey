@@ -44,7 +44,11 @@
   }
 
   &.open {
-    @include size(20vw, 100vh);
+    @include size(90vw, 100vh);
+
+    @include mq('tablet', 'min') {
+      @include size(30vw, 100vh);
+    }
   }
 
   .navigation__trigger-wrapper {

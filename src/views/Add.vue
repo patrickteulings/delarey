@@ -15,13 +15,13 @@
           <label>Hoofdcategorie</label>
           <select @change="onMainCategoryChange($event)">
             <option value="all">Selecteer</option>
-            <option v-for="(item, index) in getMainCategories()" :value="item.id" :key="index">{{item.id}}</option>
+            <option v-for="(item, index) in getMainCategories()" :value="item.id" :key="index">{{getReadableMainCat(item.id)}}</option>
           </select>
         </div>
         <!-- SUBCATEGORIES -->
         <div class="add__inputWrapper" :class="{lessVisible: state.addSub }" v-if="state.selectedMainCategory.length">
           <label>Subcategorie</label>
-          <select @change="onSubCategoryChange($event)">
+          <select @change="onSubCategoryChange($event)" v-model="state.subModel">
             <option value="all">Selecteer</option>
             <option v-for="(item, index) in state.subCategories" :value="item.id" :key="index">{{item.label}}</option>
             <option value="">----------------</option>
@@ -29,8 +29,25 @@
           </select>
         </div>
         <div v-if="state.addSub">
-          <input type="text" v-model="state.newSubcategory" placeholder="Vul max. 1 woord in">
+          <input type="text" v-model="state.newSubcategory" placeholder="Gebruik 1 of 2 woorden">
           <div class="btn btn--add" @click="onSubmitNewCategory()">{{state.addSubText}}</div>
+        </div>
+        <div class="add__inputWrapper" :class="{lessVisible: state.addSub }">
+          <label>Is het dagelijks op een bepaalde tijd?</label>
+          <div class="radioItemWrap">
+            <input type="radio" name="time" id="one" :value="true" v-model="state.isDaily">
+            <label for="one">Ja</label>
+          </div>
+          <div class="radioItemWrap">
+            <input type="radio" name="time" id="one" :value="false" v-model="state.isDaily">
+            <label for="one">Nee</label>
+          </div>
+        </div>
+        <div class="add__inputWrapper" :class="{lessVisible: state.addSub }" v-if="state.isDaily">
+          <label>Hoe laat ongeveer?</label>
+          <select @change="onTimeChange($event)">
+            <option v-for="(item, index) in state.timeBlocks" :value="item" :key="`time${index}`">{{item}}</option>
+          </select>
         </div>
         <div class="add__inputWrapper" :class="{lessVisible: state.addSub }">
           <label>Omschrijving</label>
@@ -72,16 +89,20 @@ export default {
       description: '',
       author: '',
       url: '',
+      isDaily: false,
+      dailyTime: '',
       parentLinks: context.root.$store.getters.getParentLinks,
       parentCategories: context.root.$store.getters.getParentCategories,
       subCategories: [],
       selectedSubCategory: '',
       selectedMainCategory: '',
+      subModel:'all',
       dataLoaded: false,
       newSubcategory: '',
       addSub: false,
       addtext: 'Toevoegen',
-      addSubText: 'Subcategorie Toevoegen'
+      addSubText: 'Subcategorie Toevoegen',
+      timeBlocks: ['07:30', '08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00']
     });
 
     const getLinks = computed(() => {
@@ -105,6 +126,8 @@ export default {
       const mainCat = e.target.value;
 
       state.selectedMainCategory = mainCat;
+      state.selectedSubCategory = '';
+      state.subModel = 'all';
 
       switch (mainCat) {
         case 'parents':
@@ -122,6 +145,16 @@ export default {
       }
     };
 
+    const getReadableMainCat = (str: string) => {
+      let readable = '';
+
+      if (str === 'parents') readable = 'Voor Ouders';
+      if (str === 'prepschool') readable = 'Voor groep 1/2/3';
+      if (str === 'middleschool') readable = 'Voor groep 3/4/+';
+
+      return readable;
+    };
+
     const onSubCategoryChange = (e: {target: HTMLInputElement}) => {
       if (e.target.value.toLowerCase() === 'add') {
         state.addSub = true;
@@ -131,10 +164,7 @@ export default {
     };
 
     const onSubmitNewCategory = () => {
-      state.addSubText = 'Bezig...'
-      if (state.newSubcategory.split(' ').length > 1 || state.newSubcategory.length === 0) {
-        alert('Mag max. 1 woord zijn');
-      }
+      state.addSubText = 'Bezig...';
 
       const item = {item: {label: state.newSubcategory}, mainCategory: state.selectedMainCategory};
 
@@ -155,15 +185,19 @@ export default {
       console.log(state.selectedSubCategory);
       console.log(state.author);
       console.log(state.url);
+      console.log('daily', state.isDaily);
+      console.log(state.dailyTime);
+
       // Add timestamp
       const item = {
         title: state.title,
         description: state.description,
         author: state.author,
         url: state.url,
+        daily: state.isDaily,
+        dailyTime: state.dailyTime,
         mainCategory: state.selectedMainCategory,
         subCategory: state.selectedSubCategory,
-        daily: true,
         dailyAt: '09:30',
         added: new Date()
       };
@@ -176,6 +210,10 @@ export default {
       }).catch ((e: any) => {
         state.addtext = 'er ging iets mis, App Patrick';
       });
+    };
+
+    const onTimeChange = (e: {target: HTMLInputElement}) => {
+      state.dailyTime = e.target.value;
     };
 
     onMounted (() => {
@@ -198,8 +236,10 @@ export default {
       getMainCategories,
       onMainCategoryChange,
       onSubCategoryChange,
+      onTimeChange,
       onSubmit,
-      onSubmitNewCategory
+      onSubmitNewCategory,
+      getReadableMainCat
     };
   }
 };

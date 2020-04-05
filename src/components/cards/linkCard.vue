@@ -4,10 +4,15 @@
       <small class="linkCard__label">{{getCategoryLabel(state.itemData.subCategory)}}</small>
       <small class="linkCard__label linkCard__label--daily" v-if="state.itemData.daily">dagelijks</small>
     </div>
-    <h3 class="linkCard__title">{{state.itemData.title}}</h3>
+    <h3 class="linkCard__title"><a :href="state.itemData.url" target="_blank">{{state.itemData.title}}</a></h3>
+    <p class="linkCard__author">{{state.itemData.author}}</p>
     <p class="linkCard__description">{{state.itemData.description}}</p>
     <a class="linkCard__link" :href="state.itemData.url" target="_blank">{{state.itemData.url}}</a>
-    <div class="linkCard__date">{{getReadableDate(state.itemData.added.toDate())}}</div>
+    <div class="linkCard__subs">
+      <div class="linkCard__date linkCard__edit">{{getReadableDate(state.itemData.added.toDate())}}</div>
+      <div class="linkCard__date edit" @click="editCard">edit</div>
+    </div>
+
   </div>
 </template>
 
@@ -31,22 +36,25 @@
         subCategories: props.categories
       });
 
+      const editCard = () => {
+        context.emit('onEdit', state.itemData);
+      };
+
       const getCategoryLabel = (subCategoryID: string): string => {
-        console.log('hier', state.subCategories);
         const parentCategories = state.subCategories;
         const category = parentCategories.find((item: any) => item.id === subCategoryID);
         return category.label;
       };
 
       const getReadableDate = (date: Date, longNames: boolean = false) => {
-        console.log(date);
         return readableDate(date, longNames);
       };
 
       return {
         state,
         getCategoryLabel,
-        getReadableDate
+        getReadableDate,
+        editCard
       };
     }
   };

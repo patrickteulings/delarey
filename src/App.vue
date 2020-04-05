@@ -1,10 +1,6 @@
 `<template>
   <div id="app">
-    <div v-if="loading">
-      <Splash />
-    </div>
-    <div v-else-if="error">{{error}}</div>
-    <div v-else-if="user">
+    <!-- <div v-else-if="user">
       <header>
         <Navigation @onLogout="logout()"/>
       </header>
@@ -14,12 +10,11 @@
           <router-view />
         </transition>
       </main>
-    </div>
-    <div v-else>
+    </div>-->
+    <div>
       <SidebarMenu />
-
       <!-- <LoginForm></LoginForm> -->
-      <div class="main" style="padding-left: 10vw;">
+      <div>
         <router-view />
       </div>
     </div>
@@ -50,16 +45,10 @@ export default {
   },
   setup () {
     // load in the authentication properties
-    const { user, loading, error } = useAuth();
 
-    // load in the login function
-    const loginState = useLogin();
 
     return {
-      user,
-      loading,
-      error : computed(() => (loginState.error  || error).value),
-      logout: loginState.logout
+
     };
   }
 };

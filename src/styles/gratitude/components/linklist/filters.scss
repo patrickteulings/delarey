@@ -1,7 +1,15 @@
 .filters {
   @include innerspace(0, 2rem);
-  display: flex;
-  justify-content: space-between;
+
+  @include mq('tablet-wide', 'min') {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.buttonWrappers {
+  // display: flex;
+  // justify-content: space-between;
 }
 
 .filterButton {
@@ -12,6 +20,12 @@
   @include innerspace(0.5rem, 0.8rem);
   @include transition();
   font-weight: 300;
+  cursor: pointer;
+  margin-bottom: 1rem;
+
+  &:hover {
+    background: lighten(color('tertiary'), 20%);
+  }
 
   &.active {
     background: color('white');
@@ -20,6 +34,13 @@
 
   &:last-child {
     margin-right: 0;
+  }
+
+  &--trigger {
+    background: none;
+    border: 1px solid color('tertiary');
+    color: color('white');
+    width: 100%;
   }
 }
 
@@ -41,5 +62,26 @@
     &:focus {
       outline: none;
     }
+  }
+}
+
+.filterButtonWrapper {
+  display: none;
+
+  @include mq('tablet-wide', 'min') {
+    display: block;
+  }
+
+  &.open {
+    display: block;
+  }
+}
+
+.filterTrigger {
+  display: block;
+  margin-top: 0.5rem;
+
+  @include mq('tablet-wide', 'min') {
+    display: none;
   }
 }

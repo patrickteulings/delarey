@@ -14,11 +14,13 @@
       <filters :data="state.subCategories" @onFilterClicked="onFilter" @onSortChanged="onHandleSort"/>
 
       <div class="linkCards">
-        <linkCard v-for="(item, index) in state.activeLinks" :key="`linkCard-${index}`" :data="item" :categories="state.subCategories" />
+        <linkCard @onEdit="editCard" @onDone="doneEditing" v-for="(item, index) in state.activeLinks" :key="`linkCard-${index}`" :data="item" :categories="state.subCategories" />
       </div>
     </div>
-    <div v-if="state.dataLoaded === false">
+    <div class="editPop" :class="{isVisible: state.isEditing}">
+      <Edit class="editPop__inner" :data="getSelectedItem" @onDone="doneEditing"/>
     </div>
+
   </div>
 </template>
 
@@ -26,6 +28,7 @@
 import { ref, reactive, computed, onMounted } from '@vue/composition-api';
 import linkCard from '@/components/cards/linkCard.vue';
 import filters from '@/components/filters/filters.vue';
+import Edit from '@/views/Edit.vue';
 
 interface Lala {
   title: string;
@@ -35,7 +38,8 @@ interface Lala {
 export default {
   components: {
     linkCard,
-    filters
+    filters,
+    Edit
   },
 
   setup (props: any, context: any) {
@@ -47,8 +51,24 @@ export default {
       dataLoaded: false,
       zomaar: [] as any,
       activeLinks: [] as any,
-      activeFilters: [] as any
+      activeFilters: [] as any,
+      selectedItem: {},
+      isEditing: false
     });
+
+    const editCard = (arg: any) => {
+      state.isEditing = true;
+      state.selectedItem = arg;
+    };
+
+    const getSelectedItem = computed(() => {
+      return state.selectedItem;
+    });
+
+    const doneEditing = () => {
+      console.log('ook hier klaar');
+      state.isEditing = false;
+    }
 
     const getLinks = computed(() => {
       return state.zomaar;
@@ -64,13 +84,19 @@ export default {
       }
       state.activeLinks = [];
 
+      const temp: any = [];
+
       for (const filter of state.activeFilters) {
         for (const item of state.originalParentLinks) {
           if (item.subCategory === filter) {
-            state.activeLinks.push(item);
+            temp.push(item);
           }
         }
       }
+
+      setTimeout(() => {
+        state.activeLinks = temp;
+      }, 0);
     };
 
     const onHandleSort = (sortType: string) => {
@@ -122,7 +148,10 @@ export default {
       state,
       getLinks,
       onFilter,
-      onHandleSort
+      onHandleSort,
+      getSelectedItem,
+      doneEditing,
+       editCard,
     };
   }
 };
