@@ -13,7 +13,7 @@
         <!-- MAINCATEGORIES -->
         <div class="add__inputWrapper" :class="{lessVisible: state.addSub }">
           <label>Hoofdcategorie</label>
-          <select @change="onMainCategoryChange($event)">
+          <select @change="onMainCategoryChange($event)" v-model="selectedMainCategoryTest">
             <option value="all">Selecteer</option>
             <option v-for="(item, index) in getMainCategories()" :value="item.id" :key="index">{{getReadableMainCat(item.id)}}</option>
           </select>
@@ -96,6 +96,8 @@ export default {
       subCategories: [],
       selectedSubCategory: '',
       selectedMainCategory: '',
+      selectedSubCategoryTest: '',
+      selectedMainCategoryTest: '',
       subModel:'all',
       dataLoaded: false,
       newSubcategory: '',
@@ -187,6 +189,16 @@ export default {
       console.log(state.url);
       console.log('daily', state.isDaily);
       console.log(state.dailyTime);
+
+      if (state.subModel === 'all') {
+        alert('Kies een subcategorie');
+        return;
+      }
+
+      if (state.title === '' || state.description === '' || state.author === '' || state.url === '') {
+        alert('Vul je all velden in? Dank je!');
+        return;
+      }
 
       // Add timestamp
       const item = {
