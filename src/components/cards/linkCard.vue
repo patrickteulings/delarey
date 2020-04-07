@@ -1,5 +1,5 @@
 <template>
-  <div class="linkCard">
+  <div class="">
     <div>
       <small class="linkCard__label">{{getCategoryLabel(state.itemData.subCategory)}}</small>
       <small class="linkCard__label linkCard__label--daily" v-if="state.itemData.daily">dagelijks</small>
@@ -9,8 +9,8 @@
     <p class="linkCard__description">{{state.itemData.description}}</p>
     <a class="linkCard__link" :href="state.itemData.url" target="_blank">{{state.itemData.url}}</a>
     <div class="linkCard__subs">
-      <div class="linkCard__date linkCard__edit">{{getReadableDate(state.itemData.added.toDate())}}</div>
-      <div class="linkCard__date edit" @click="editCard">edit</div>
+      <div class="linkCard__date">{{getReadableDate(state.itemData.added.toDate())}}</div>
+      <div class="linkCard__date linkCard__edit" @click="editCard">edit</div>
     </div>
 
   </div>

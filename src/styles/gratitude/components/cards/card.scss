@@ -40,7 +40,8 @@ small.id {
 }
 
 .linkCard {
-  max-width: 260px;
+  // max-width: 260px;
+  min-width: 0;
   background: lighten(color('primary'), 20%);
   @include innerspace(1rem);
   @include card-shadow(2);
@@ -50,13 +51,21 @@ small.id {
   flex-direction: column;
 
   @include mq('tablet', 'min') {
-    max-width: 320px;
+    // max-width: 320px;
   }
 
 
   &:hover {
     background: lighten(color('primary'), 30%);
     @include card-shadow(3);
+
+    .linkCard__edit {
+      opacity: 1;
+    }
+    .linkCard__link {
+      color: color('accent');
+    }
+
   }
 
   &__label {
@@ -99,6 +108,9 @@ small.id {
 
   &__edit {
     cursor: pointer;
+
+    opacity: 0;
+    @include transition();
   }
 
   &__subs {

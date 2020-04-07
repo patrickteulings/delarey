@@ -14,7 +14,7 @@
       <filters :data="state.subCategories" @onFilterClicked="onFilter" @onSortChanged="onHandleSort"/>
 
       <div class="linkCards">
-        <linkCard @onEdit="editCard" @onDone="doneEditing" v-for="(item, index) in state.activeLinks" :key="`linkCard-${index}`" :data="item" :categories="state.subCategories" />
+        <linkCard @onEdit="editCard" @onDone="doneEditing" class="linkCard" v-for="(item, index) in state.activeLinks" :key="`linkCard-${index}`" :data="item" :categories="state.subCategories" />
       </div>
     </div>
     <div class="editPop" :class="{isVisible: state.isEditing}">
