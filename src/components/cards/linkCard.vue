@@ -2,7 +2,7 @@
   <div class="">
     <div>
       <small class="linkCard__label">{{getCategoryLabel(state.itemData.subCategory)}}</small>
-      <small class="linkCard__label linkCard__label--daily" v-if="state.itemData.daily">dagelijks</small>
+      <small class="linkCard__label linkCard__label--daily" v-if="state.itemData.daily">dagelijks {{state.itemData.dailyAt}}</small>
     </div>
     <h3 class="linkCard__title"><a :href="state.itemData.url" target="_blank">{{state.itemData.title}}</a></h3>
     <p class="linkCard__author">{{state.itemData.author}}</p>
