@@ -87,10 +87,8 @@ export default {
 
       for (const filter of state.activeFilters) {
         for (const item of state.originalParentLinks) {
-          console.log(item.subCategory, filter)
           if (item.subCategory === filter) {
             temp.push(item);
-            // state.activeLinks.push(item);
           }
         }
       }

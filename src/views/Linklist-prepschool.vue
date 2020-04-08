@@ -150,7 +150,7 @@ export default {
       onHandleSort,
       getSelectedItem,
       doneEditing,
-       editCard,
+      editCard
     };
   }
 };

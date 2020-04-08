@@ -13,7 +13,7 @@
         <!-- MAINCATEGORIES -->
         <div class="add__inputWrapper" :class="{lessVisible: state.addSub }">
           <label>Hoofdcategorie</label>
-          <select @change="onMainCategoryChange($event)" v-model="selectedMainCategoryTest">
+          <select @change="onMainCategoryChange($event)">
             <option value="all">Selecteer</option>
             <option v-for="(item, index) in getMainCategories()" :value="item.id" :key="index">{{getReadableMainCat(item.id)}}</option>
           </select>
@@ -97,8 +97,7 @@ export default {
       selectedSubCategory: '',
       selectedMainCategory: '',
       selectedSubCategoryTest: '',
-      selectedMainCategoryTest: '',
-      subModel:'all',
+      subModel: 'all',
       dataLoaded: false,
       newSubcategory: '',
       addSub: false,
@@ -190,7 +189,7 @@ export default {
       console.log('daily', state.isDaily);
       console.log(state.dailyTime);
 
-      if (state.subModel === 'all') {
+      if (state.subModel === 'all' || state.subModel === 'add') {
         alert('Kies een subcategorie');
         return;
       }

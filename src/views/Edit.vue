@@ -75,7 +75,7 @@ export default {
     });
 
     const onSubmit = () => {
-      context.root.$store.dispatch('updateLink', state.itemData).then(()=>{
+      context.root.$store.dispatch('updateLink', state.itemData).then(() => {
         console.log('whoepie');
         onDone();
       });
@@ -86,7 +86,7 @@ export default {
       setTimeout(() => {
         context.emit('onDone');
       }, 600);
-    }
+    };
 
     const onTimeChange = (e: {target: HTMLInputElement}) => {
       state.itemData.dailyAt = e.target.value;
