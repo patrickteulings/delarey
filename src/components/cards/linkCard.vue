@@ -42,7 +42,6 @@
 
       const getCategoryLabel = (linkItem: any): string => {
         const parentCategories = state.subCategories;
-
         const category = parentCategories.find((item: any) => item.id === linkItem.subCategory);
         return category.label;
       };
