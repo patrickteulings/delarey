@@ -66,9 +66,8 @@ export default {
     });
 
     const doneEditing = () => {
-      console.log('ook hier klaar');
       state.isEditing = false;
-    }
+    };
 
     const getLinks = computed(() => {
       return state.zomaar;
@@ -88,15 +87,18 @@ export default {
 
       for (const filter of state.activeFilters) {
         for (const item of state.originalParentLinks) {
+          console.log(item.subCategory, filter)
           if (item.subCategory === filter) {
-            state.activeLinks.push(item);
+            temp.push(item);
+            // state.activeLinks.push(item);
           }
         }
       }
 
       setTimeout(() => {
         state.activeLinks = temp;
-      }, 20);
+        console.log(temp);
+      }, 200);
     };
 
     const onHandleSort = (sortType: string) => {
@@ -138,8 +140,7 @@ export default {
           state.activeLinks = responseLinks;
           setTimeout(() => {
             state.dataLoaded = true;
-          }, 200);
-
+          }, 20);
         });
       });
     });
@@ -151,7 +152,7 @@ export default {
       onHandleSort,
       getSelectedItem,
       doneEditing,
-       editCard,
+      editCard
     };
   }
 };

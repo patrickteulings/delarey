@@ -1,8 +1,8 @@
 <template>
   <div class="">
     <div>
-      <small class="linkCard__label">{{getCategoryLabel(state.itemData.subCategory)}}</small>
-      <small class="linkCard__label linkCard__label--daily" v-if="state.itemData.daily">dagelijks {{state.itemData.dailyAt}}</small>
+      <small class="linkCard__label">{{getCategoryLabel(state.itemData)}}</small>
+      <small class="linkCard__label linkCard__label--daily" v-if="state.itemData.daily">dagelijks Omdat {{state.itemData.dailyAt}}</small>
     </div>
     <h3 class="linkCard__title"><a :href="state.itemData.url" target="_blank">{{state.itemData.title}}</a></h3>
     <p class="linkCard__author">{{state.itemData.author}}</p>
@@ -40,9 +40,10 @@
         context.emit('onEdit', state.itemData);
       };
 
-      const getCategoryLabel = (subCategoryID: string): string => {
+      const getCategoryLabel = (linkItem: any): string => {
         const parentCategories = state.subCategories;
-        const category = parentCategories.find((item: any) => item.id === subCategoryID);
+
+        const category = parentCategories.find((item: any) => item.id === linkItem.subCategory);
         return category.label;
       };
 

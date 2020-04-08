@@ -66,9 +66,8 @@ export default {
     });
 
     const doneEditing = () => {
-      console.log('ook hier klaar');
       state.isEditing = false;
-    }
+    };
 
     const getLinks = computed(() => {
       return state.zomaar;
