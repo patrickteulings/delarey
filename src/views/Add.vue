@@ -170,7 +170,9 @@ export default {
       const item = {item: {label: state.newSubcategory}, mainCategory: state.selectedMainCategory};
 
       context.root.$store.dispatch('addSubCategory', item).then((response: any) => {
+
         setTimeout(() => {
+          state.subModel = response.id;
           state.addSubText = 'Toevoegen';
           state.addSub = false;
         }, 600);
